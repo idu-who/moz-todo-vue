@@ -1,12 +1,23 @@
 <template>
     <div id="app">
         <h1>To-Do List</h1>
+        <ul>
+            <li>
+                <to-do-item label="Make custom component" :done="true"></to-do-item>
+                <to-do-item label="Get a life"></to-do-item>
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
+import ToDoItem from "./components/ToDoItem.vue";
+
 export default {
     name: "App",
+    components: {
+        ToDoItem,
+    },
 };
 </script>
 
