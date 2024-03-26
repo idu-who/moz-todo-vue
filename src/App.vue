@@ -1,6 +1,8 @@
 <template>
     <div id="app">
+        <text-input label="Enter your name: "></text-input>
         <h1>To-Do List</h1>
+        <text-input label="Create task: "></text-input>
         <ul>
             <li>
                 <to-do-item label="Make custom component" :done="true"></to-do-item>
@@ -12,11 +14,13 @@
 
 <script>
 import ToDoItem from "./components/ToDoItem.vue";
+import TextInput from "./components/TextInput.vue";
 
 export default {
     name: "App",
     components: {
         ToDoItem,
+        TextInput,
     },
 };
 </script>
