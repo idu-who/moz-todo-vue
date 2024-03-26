@@ -1,12 +1,9 @@
 <template>
     <div id="app">
-        <text-input label="Enter your name: "></text-input>
         <h1>To-Do List</h1>
-        <text-input label="Create task: "></text-input>
         <ul>
-            <li>
-                <to-do-item label="Make custom component" :done="true"></to-do-item>
-                <to-do-item label="Get a life"></to-do-item>
+            <li v-for="items in ToDoItems" :key="items.id">
+                <to-do-item :id="items.id" :label="items.label" :done="items.done" />
             </li>
         </ul>
     </div>
@@ -14,13 +11,22 @@
 
 <script>
 import ToDoItem from "./components/ToDoItem.vue";
-import TextInput from "./components/TextInput.vue";
+import uniqueId from "lodash.uniqueid";
 
 export default {
     name: "App",
     components: {
         ToDoItem,
-        TextInput,
+    },
+    data() {
+        return {
+            ToDoItems: [
+                { id: uniqueId("todo-"), label: "Learn Vue", done: false },
+                { id: uniqueId("todo-"), label: "Create a Vue project with the CLI", done: true },
+                { id: uniqueId("todo-"), label: "Have fun", done: true },
+                { id: uniqueId("todo-"), label: "Create a to-do list", done: false },
+            ],
+        };
     },
 };
 </script>
