@@ -26,7 +26,7 @@ export default {
             this.clearInput("new-todo-input");
         },
         clearInput(inputId) {
-            let input = this.$el.elements.namedItem(inputId);
+            const input = this.$el.elements.namedItem(inputId);
             if (input) {
                 input.value = "";
             }
