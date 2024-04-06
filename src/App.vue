@@ -3,8 +3,15 @@
     <to-do-form @todo-added="addToDo" />
     <h2 id="list-summary">{{ listSummary }}</h2>
     <ul aria-labelledby="list-summary" class="stack-large">
-        <li v-for="items in ToDoItems" :key="items.id">
-            <to-do-item :id="items.id" :label="items.label" :done="items.done" @checkbox-changed="updateDoneStatus(items.id)" />
+        <li v-for="item in ToDoItems" :key="item.id">
+            <to-do-item
+                :id="item.id"
+                :label="item.label"
+                :done="item.done"
+                @checkbox-changed="updateDoneStatus(item.id)"
+                @item-deleted="deleteToDo(item.id)"
+                @item-edited="editToDo(item.id, $event)"
+            />
         </li>
     </ul>
 </template>
@@ -39,6 +46,14 @@ export default {
             if (toDoToUpdate) {
                 toDoToUpdate.done = !toDoToUpdate.done;
             }
+        },
+        deleteToDo(toDoId) {
+            const itemIndex = this.ToDoItems.findIndex((item) => item.id === toDoId);
+            this.ToDoItems.splice(itemIndex, 1);
+        },
+        editToDo(toDoId, newLabel) {
+            const toDoToEdit = this.ToDoItems.find((item) => item.id === toDoId);
+            toDoToEdit.label = newLabel;
         },
     },
     computed: {

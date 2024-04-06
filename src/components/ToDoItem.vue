@@ -1,16 +1,52 @@
 <template>
-    <div class="custom-checkbox">
-        <input type="checkbox" :id :checked="done" class="checkbox" @change="$emit('checkbox-changed')" />
-        <label :for="id" class="checkbox-label">{{ label }}</label>
+    <div v-if="!isEditing" class="stack-small">
+        <div class="custom-checkbox">
+            <input type="checkbox" :id :checked="isDone" class="checkbox" @change="$emit('checkbox-changed')" />
+            <label :for="id" class="checkbox-label">{{ label }}</label>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn" @click="toggleToDoItemEditForm">
+                Edit <span class="visually-hidden">{{ label }}</span>
+            </button>
+            <button type="button" class="btn btn__danger" @click="$emit('item-deleted', id)">
+                Delete <span class="visually-hidden">{{ label }}</span>
+            </button>
+        </div>
     </div>
+    <to-do-item-edit-form v-else :id :label @item-edited="itemEdited" @edit-cancelled="editCancelled"></to-do-item-edit-form>
 </template>
 
 <script>
+import ToDoItemEditForm from "./ToDoItemEditForm.vue";
+
 export default {
+    components: { ToDoItemEditForm },
     props: {
         id: { required: true, type: String },
         label: { required: true, type: String },
         done: { default: false, type: Boolean },
+    },
+    data() {
+        return {
+            isEditing: false,
+        };
+    },
+    computed: {
+        isDone() {
+            return this.done;
+        },
+    },
+    methods: {
+        toggleToDoItemEditForm() {
+            this.isEditing = true;
+        },
+        editCancelled() {
+            this.isEditing = false;
+        },
+        itemEdited(newLabel) {
+            this.$emit("item-edited", newLabel);
+            this.isEditing = false;
+        },
     },
 };
 </script>
