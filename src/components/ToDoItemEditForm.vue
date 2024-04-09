@@ -5,7 +5,7 @@
             <input type="text" :id autocomplete="off" v-model.lazy.trim="newLabel" />
         </div>
         <div class="btn-group">
-            <button type="button" class="btn" @click="$emit('edit-cancelled')">
+            <button type="button" class="btn" @click="onCancel">
                 Cancel
                 <span class="visually-hidden">editing {{ label }}</span>
             </button>
@@ -30,11 +30,14 @@ export default {
     },
     methods: {
         onSubmit() {
-            if (!(this.newLabel && this.newLabel !== this.label)) {
+            if (this.newLabel && this.newLabel !== this.label) {
+                this.$emit("item-edited", this.newLabel);
+            } else {
                 this.$emit("edit-cancelled");
-                return;
             }
-            this.$emit("item-edited", this.newLabel);
+        },
+        onCancel() {
+            this.$emit("edit-cancelled");
         },
     },
 };

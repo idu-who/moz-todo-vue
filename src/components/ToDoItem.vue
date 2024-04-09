@@ -8,7 +8,7 @@
             <button type="button" class="btn" @click="toggleToDoItemEditForm">
                 Edit <span class="visually-hidden">{{ label }}</span>
             </button>
-            <button type="button" class="btn btn__danger" @click="$emit('item-deleted', id)">
+            <button type="button" class="btn btn__danger" @click="deleteToDo">
                 Delete <span class="visually-hidden">{{ label }}</span>
             </button>
         </div>
@@ -39,6 +39,9 @@ export default {
     methods: {
         toggleToDoItemEditForm() {
             this.isEditing = true;
+        },
+        deleteToDo() {
+            this.$emit("item-deleted");
         },
         editCancelled() {
             this.isEditing = false;

@@ -53,7 +53,9 @@ export default {
         },
         editToDo(toDoId, newLabel) {
             const toDoToEdit = this.ToDoItems.find((item) => item.id === toDoId);
-            toDoToEdit.label = newLabel;
+            if (toDoToEdit) {
+                toDoToEdit.label = newLabel;
+            }
         },
     },
     computed: {
