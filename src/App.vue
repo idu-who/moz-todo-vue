@@ -29,8 +29,14 @@ export default {
     },
     data() {
         return {
-            ToDoItems: [{ id: uniqueId("todo-"), label: "Sample Todo", done: false }],
+            ToDoItems: [],
         };
+    },
+    computed: {
+        listSummary() {
+            const numberFinishedItems = this.ToDoItems.filter((item) => item.done).length;
+            return `${numberFinishedItems} out of ${this.ToDoItems.length} completed`;
+        },
     },
     methods: {
         addToDo(newToDoLabel) {
@@ -52,12 +58,6 @@ export default {
             if (toDoToEdit) {
                 toDoToEdit.label = newLabel;
             }
-        },
-    },
-    computed: {
-        listSummary() {
-            const numberFinishedItems = this.ToDoItems.filter((item) => item.done).length;
-            return `${numberFinishedItems} out of ${this.ToDoItems.length} completed`;
         },
     },
 };
