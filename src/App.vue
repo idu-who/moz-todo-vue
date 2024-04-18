@@ -41,24 +41,38 @@ export default {
     methods: {
         addToDo(newToDoLabel) {
             this.ToDoItems.push({ id: uniqueId("todo-"), label: newToDoLabel, done: false });
+            this.storeToDoItems();
         },
         updateDoneStatus(toDoId) {
             const toDoToUpdate = this.ToDoItems.find((item) => item.id === toDoId);
             if (toDoToUpdate) {
                 toDoToUpdate.done = !toDoToUpdate.done;
             }
+            this.storeToDoItems();
         },
         deleteToDo(toDoId) {
             const itemIndex = this.ToDoItems.findIndex((item) => item.id === toDoId);
             this.ToDoItems.splice(itemIndex, 1);
             this.$refs.listSummary.focus();
+            this.storeToDoItems();
         },
         editToDo(toDoId, newLabel) {
             const toDoToEdit = this.ToDoItems.find((item) => item.id === toDoId);
             if (toDoToEdit) {
                 toDoToEdit.label = newLabel;
             }
+            this.storeToDoItems();
         },
+        storeToDoItems() {
+            localStorage.setItem("ToDoItems", JSON.stringify(this.ToDoItems));
+        },
+    },
+    mounted() {
+        // get ToDoItems from localStorage
+        let items = localStorage.getItem("ToDoItems");
+        if (items != null) {
+            this.ToDoItems = JSON.parse(items);
+        }
     },
 };
 </script>
